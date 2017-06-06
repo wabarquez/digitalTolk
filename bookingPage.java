@@ -35,6 +35,11 @@ public class bookingPage {
 		return element;
 	}
 	
+	public static WebElement date_06082017(WebDriver driver){
+		element = driver.findElement(By.xpath(".//*[@id='Body__App']/div[5]/div[1]/table/tbody/tr[2]/td[4]"));
+		return element;
+	}
+	
 	// Timepicker
 	public static WebElement dpd_timePicker(WebDriver driver){
 		element = driver.findElement(By.xpath(".//*[@id='Timepicker']"));

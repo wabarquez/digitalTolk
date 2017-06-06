@@ -19,6 +19,11 @@ public class mainPage {
 		return element;
 	}
 	
+	public static WebElement lbl_Logout_1(WebDriver driver){
+		element = driver.findElement(By.xpath(".//*[@id='Body__App']/nav/div[2]/div/div[2]/ul/li[4]/a"));
+		return element;
+	}
+	
 	// Email label
 	public static WebElement lbl_Email(WebDriver driver){
 		element = driver.findElement(By.xpath(".//*[@id='loginForm']/div[1]/label"));

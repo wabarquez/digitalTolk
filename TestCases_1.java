@@ -1,9 +1,11 @@
 package digitalTolk;
 
 import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
+//import org.openqa.selenium.support.ui.Select;
 
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeTest;
@@ -15,6 +17,7 @@ import digitalTolk.bookingPage;
 import digitalTolk.confirmationPage;
 import digitalTolk.myBooking;
 import digitalTolk.Constant;
+import digitalTolk.LogIn_Action;
 
 public class TestCases_1 {
 	private static WebDriver driver = null;
@@ -22,16 +25,14 @@ public class TestCases_1 {
 	@BeforeTest
 	public void beforeTest(){
 		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		driver.get(Constant.URL);
 	}
 	
 	@Test(priority = 0)
 	public void verify_customer_login_successfully(){
-		mainPage.lbl_Login(driver).click();
-		mainPage.txtbx_Email(driver).sendKeys(Constant.Email);
-		mainPage.txtbx_pwd(driver).sendKeys(Constant.Password);
-		mainPage.btn_Login(driver).click();
+		LogIn_Action.Execute(driver, Constant.Email, Constant.Password);
+		System.out.println("Customer Login Successfully");
 		Assert.assertTrue(mainPage.lbl_Logout(driver).isDisplayed());
 	}
 	
@@ -40,10 +41,10 @@ public class TestCases_1 {
 		bookingPage.dpd_Language(driver).click();
 		bookingPage.txt_Search(driver).sendKeys(Constant.Language);
 		bookingPage.lbl_Ludhianiska(driver).click();
-		
+		System.out.println("Ludhianiska has been selected.");
 		// Select Date
 		bookingPage.dpd_datePicker(driver).click();
-		bookingPage.date_06062017(driver).click();
+		bookingPage.date_06082017(driver).click();
 		
 		// Time
 		bookingPage.dpd_timePicker(driver).sendKeys(Constant.Time);
@@ -67,17 +68,12 @@ public class TestCases_1 {
 		Assert.assertEquals(Email, Constant.Email);
 	}
 	@Test(priority = 2)
-	public void verify_correct_booking_ID(String[] args) throws InterruptedException{
-		//confirmationPage.btn_Avbryt(driver).click();
+	public void verify_correct_booking_ID(){
 		confirmationPage.btn_Skicka_bokning(driver).click();
-		Assert.assertTrue(myBooking.header_MyBooking(driver).isDisplayed());
-		/*myBooking.dpd_MyBooking(driver).click();
-		myBooking.lbl_Tidigare(driver).click();
-		Thread.sleep(1000);
-		myBooking.btn_Detaljer(driver).click();*/
-	
+		//Assert.assertTrue(myBooking.header_MyBooking(driver).isDisplayed());
+		String TD = driver.findElement(By.xpath(".//*[@id='my-bookings--items--body']/table/tbody/tr[1]/td[1]")).getText();
+		System.out.println(TD);
 	}
-	
 	
 	@AfterTest
 	public void afterTest() {
